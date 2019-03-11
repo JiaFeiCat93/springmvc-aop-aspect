@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -23,11 +24,35 @@ public class CalculationAspect {
 	private static final Logger logger = LoggerFactory.getLogger(CalculationAspect.class);
 	
 	/**
+	 * 设置切入的目标方法，其他切点方法可以使用
+	 * @Title: aspectName
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param: 
+	 * @return: void
+	 * @throws
+	 */
+	@Pointcut("execution(public int com.qetch.springmvc.service.CalculationImpl.*(int,int))")
+	public void aspectName() {
+		
+	}
+	
+	/**
 	 * 前置通知
 	 * @param joinPoint
 	 */
-	@Before("execution(public int com.qetch.springmvc.service.CalculationImpl.*(int,int))")
-	public void beforeMethod(JoinPoint joinPoint) {
+//	@Before("execution(public int com.qetch.springmvc.service.CalculationImpl.*(int,int))")
+//	public void beforeMethod(JoinPoint joinPoint) {
+//		String name = joinPoint.getSignature().getName();
+//		List<Object> argsList = Arrays.asList(joinPoint.getArgs());
+//		logger.info("@Before ... ,method=" + name + ",args=" + argsList);
+//	}
+	
+	/**
+	 * 前置通知2
+	 * @param joinPoint
+	 */
+	@Before("aspectName()")
+	public void beforeMethod2(JoinPoint joinPoint) {
 		String name = joinPoint.getSignature().getName();
 		List<Object> argsList = Arrays.asList(joinPoint.getArgs());
 		logger.info("@Before ... ,method=" + name + ",args=" + argsList);
@@ -48,8 +73,19 @@ public class CalculationAspect {
 	 * 返回通知
 	 * @param joinPoint
 	 */
-	@AfterReturning(value = "execution(public int com.qetch.springmvc.service.CalculationImpl.*(int,int))", returning = "result")
-	public void afterReturningMethod(JoinPoint joinPoint, Object result) {
+//	@AfterReturning(value = "execution(public int com.qetch.springmvc.service.CalculationImpl.*(int,int))", returning = "result")
+//	public void afterReturningMethod(JoinPoint joinPoint, Object result) {
+//		String name = joinPoint.getSignature().getName();
+//		List<Object> argsList = Arrays.asList(joinPoint.getArgs());
+//		logger.info("@AfterReturning ... ,method=" + name + ",args=" + argsList + ",return=" + result);
+//	}
+	
+	/**
+	 * 返回通知2
+	 * @param joinPoint
+	 */
+	@AfterReturning(value = "aspectName()", returning = "result")
+	public void afterReturningMethod2(JoinPoint joinPoint, Object result) {
 		String name = joinPoint.getSignature().getName();
 		List<Object> argsList = Arrays.asList(joinPoint.getArgs());
 		logger.info("@AfterReturning ... ,method=" + name + ",args=" + argsList + ",return=" + result);

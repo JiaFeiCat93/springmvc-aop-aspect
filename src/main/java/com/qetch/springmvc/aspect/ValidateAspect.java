@@ -13,8 +13,13 @@ import org.springframework.stereotype.Component;
 public class ValidateAspect {
 	private static final Logger logger = LoggerFactory.getLogger(ValidateAspect.class);
 
-	@Before("execution(public int com.qetch.springmvc.service.CalculationImpl.*(int,int))")
-	public void validate() {
+//	@Before("execution(public int com.qetch.springmvc.service.CalculationImpl.*(int,int))")
+//	public void validate() {
+//		logger.info("--->validate--->");
+//	}
+	
+	@Before("com.qetch.springmvc.aspect.CalculationAspect.aspectName()")
+	public void validate2() {
 		logger.info("--->validate--->");
 	}
 }
